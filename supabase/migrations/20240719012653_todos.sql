@@ -18,7 +18,8 @@ create table
         title text not null,
         description text,
         owner uuid not null,
+        completed boolean DEFAULT false,
         constraint profiles_fkey foreign key (owner) references public.profiles (user_id) on delete cascade,
         completed_at timestamp,
-        created_at timestamp
+        created_at timestamp DEFAULT current_timestamp
     ) tablespace pg_default;
