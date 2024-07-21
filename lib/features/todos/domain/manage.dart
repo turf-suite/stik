@@ -31,9 +31,4 @@ class ManageTodo implements ManageTodoUseCase {
     todo.completed = false;
     return await _repository.updateTodo(todo);
   }
-
-  @override
-  Future<void> deleteTodo(Todo todo) async {
-    return await _repository.deleteTodo(todo);
-  }
 }

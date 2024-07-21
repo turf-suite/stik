@@ -1,8 +1,10 @@
 import 'package:uuid/uuid.dart';
 import "todo.dart";
 
-abstract class CreateTodoUseCase {
-  Future<Todo> execute(Uuid ownerId, String name, String description);
+abstract class ManageTodoListUseCase {
+  Future<Todo> createTodo(Uuid ownerId, String name, String description);
+
+  Future<void> deleteTodo(Todo todo);
 }
 
 abstract class ManageTodoUseCase {
@@ -13,6 +15,4 @@ abstract class ManageTodoUseCase {
   Future<void> markTodoCompleted(Todo todo);
 
   Future<void> markTodoUnCompleted(Todo todo);
-
-  Future<void> deleteTodo(Todo todo);
 }
