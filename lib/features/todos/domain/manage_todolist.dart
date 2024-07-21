@@ -1,18 +1,18 @@
+import 'package:stik/core/auth/user.dart';
 import 'package:stik/features/todos/domain/todo.dart';
-
-import 'package:uuid/uuid.dart';
 
 import 'todos_repository.dart';
 import 'use_cases.dart';
 
 class ManageTodoList implements ManageTodoListUseCase {
   final TodosRepository _repository;
+  final User _user;
 
-  ManageTodoList(this._repository);
+  ManageTodoList(this._repository, this._user);
 
   @override
-  Future<Todo> createTodo(Uuid ownerId, String name, String description) async {
-    return await _repository.saveTodo(name, description, ownerId);
+  Future<Todo> createTodo(String name, String description) async {
+    return await _repository.saveTodo(name, description, _user.id);
   }
 
   @override
@@ -21,8 +21,8 @@ class ManageTodoList implements ManageTodoListUseCase {
   }
 
   @override
-  Future<List<Todo>> getAllOpenTodos(Uuid ownerId) async {
-    return await _repository.getAllOpenTodos(ownerId);
+  Future<List<Todo>> getAllOpenTodos() async {
+    return await _repository.getAllOpenTodos(_user.id);
   }
     @override
   Future<void> updateTodo(Todo todo) async {
