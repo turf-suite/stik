@@ -8,7 +8,9 @@ import 'package:stik/core/auth/state.dart';
 import 'package:stik/core/auth/user_repository.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
+  final UserRepository userRepository;
+
+  const App({super.key, required this.userRepository});
 
   @override
   State<App> createState() => _AppState();
@@ -19,6 +21,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
+    _userRepository = widget.userRepository;
     super.initState();
   }
 
