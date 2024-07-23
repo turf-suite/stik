@@ -1,9 +1,13 @@
 
+import 'package:equatable/equatable.dart';
 import 'package:stik/core/auth/user.dart';
 
 enum AuthenticationStatus { authenticated, unauthenticated, unknown }
 
-class AuthenticationState {
+class AuthenticationState extends Equatable {
+  final AuthenticationStatus status;
+  final User? user;
+
   const AuthenticationState._({
     this.status = AuthenticationStatus.unknown,
     this.user
@@ -17,6 +21,6 @@ class AuthenticationState {
   const AuthenticationState.unauthenticated()
       : this._(status: AuthenticationStatus.unauthenticated);
 
-  final AuthenticationStatus status;
-  final User? user;
+  @override
+  List<Object?> get props => [status, user];
 }

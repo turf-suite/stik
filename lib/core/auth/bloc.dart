@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stik/core/auth/event.dart';
 import 'package:stik/core/auth/state.dart';
 import 'package:stik/core/auth/user_repository.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
@@ -15,6 +16,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       (status) => add(AuthenticationStatusChanged(status)),
     );
     on<AuthenticationStatusChanged>((event, emit) async {
+      debugPrint("AuthenticationStatusChanged event added to auth bloc");
       switch (event.status) {
         case AuthenticationStatus.unauthenticated:
           return emit(const AuthenticationState.unauthenticated());
@@ -22,12 +24,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
           final user = await _userRepository.tryGetUser();
           return emit(AuthenticationState.authenticated(user!));
         case AuthenticationStatus.unknown:
-          final user = await _userRepository.tryGetUser();
-          return emit(
-            user != null
-            ? AuthenticationState.authenticated(user)
-            : const AuthenticationState.unauthenticated(),
-          );
+          return emit(const AuthenticationState.unknown());
       }
     });
   }

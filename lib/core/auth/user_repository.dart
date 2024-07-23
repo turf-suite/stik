@@ -8,7 +8,16 @@ abstract class UserRepository {
 
   UserRepository();
 
-  get authStatusUpdates => _streamController;
+  Stream<AuthenticationStatus> get authStatusUpdates async* {
+    final user = await tryGetUser();
+    if (user == null) {
+      yield AuthenticationStatus.unauthenticated;
+    }
+    else {
+      yield AuthenticationStatus.authenticated;
+    }
+    yield* _streamController.stream;
+  }
 
   Future<User> login(String email, String password);
 
